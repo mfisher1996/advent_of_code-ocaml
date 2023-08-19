@@ -25,13 +25,13 @@ let () =
 
 
 let () = print_newline ()
+
+let code_of_char start = function
+    | a -> Char.code a - Char.code start
     
 let () = print_endline "Day 2 Part 1: "
 let () = 
     let file = "./prod_2"
-    in
-    let code_of_char start = function
-        | a -> Char.code a - Char.code start
     in
     let get_score c d = match (c, d) with
         | a, b when a == (b + 1) mod  3  -> b + 1
@@ -39,10 +39,28 @@ let () =
         | _, b -> b + 4
     in 
     let input = open_in file in
-    let rec read_file acc file = match input_line file with
+    let rec read_file_1 acc file = match input_line file with
         | exception End_of_file -> acc
-        | line when String.length line == 3 ->  read_file ( (get_score (code_of_char 'A' (String.get line 0))  (code_of_char 'X' (String.get line 2))) + acc ) input
-        | _ -> read_file acc input
+        | line when String.length line == 3 ->  read_file_1 ( (get_score (code_of_char 'A' (String.get line 0))  (code_of_char 'X' (String.get line 2))) + acc ) input
+        | _ -> read_file_1 acc input
     in 
-    print_int (read_file 0 input);
+    print_int (read_file_1 0 input);
+    print_endline "\nPart 2: "
+
+let () = 
+    let file = "./prod_2" 
+    in
+    let input = open_in file 
+    in
+    let get_play c d = match (c, d) with 
+        | a, 'X' -> if a == 0 then 3 else a 
+        | a, 'Y' -> a + 4
+        | a, _ -> ((a + 1) mod 3) + 7 
+    in
+    let rec read_file_2 acc file = match input_line file with 
+        | exception End_of_file -> acc
+        | line when String.length line == 3 ->read_file_2 ( (get_play ( code_of_char 'A' (String.get line 0) ) (String.get line 2)) + acc ) input 
+        | _ -> read_file_2 acc file
+    in
+    print_int (read_file_2 0 input);
     print_newline ()
