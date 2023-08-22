@@ -1,4 +1,3 @@
-
 let () = print_endline "Day 1 Part 1: "
 
 let () = 
@@ -130,8 +129,18 @@ let () =
     print_endline "Part 2: ";
     print_int (read_file input)
 
+open Advent_of_code_ocaml
 
-
-
-
+let () = 
+    let file_n = "./prod_4"
+    in 
+    let input = open_in file_n
+    in 
+    let rec read_file acc file = 
+        match input_line file with
+        | exception End_of_file -> acc
+        | line when String.length line > 0 ->  read_file (if Day4.over_lap_all (Day4.of_string line) then acc + 1 else acc) file
+        | _ -> acc
+    in print_endline "\nDay 4 Part 1"; 
+    print_int ( read_file 0 input)
 
