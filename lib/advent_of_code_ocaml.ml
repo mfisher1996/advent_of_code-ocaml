@@ -13,7 +13,7 @@ module Day4 = struct
     (** returns true if any of either tuple overlaps the other*)
     let over_lap_any ((x1,y1),(x2,y2)) =
         let first_gap, second_gap = y1 - x1, y2 - x2 in 
-        if first_gap >= second_gap then (x1 + first_gap) >= y2 && x1 <= x2
-        else (x2 + second_gap ) >= y1 && x2 <= x1
+        if first_gap >= second_gap then y1 >= y2 || x1 <= x2
+        else y2 >= y1 || x2 <= x1
     
 end
