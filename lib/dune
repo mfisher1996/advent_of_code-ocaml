@@ -1,2 +1,2 @@
-(library
- (name advent_of_code_ocaml))
+(include_subdirs qualified)
+(library (name advent_of_code_ocaml))
